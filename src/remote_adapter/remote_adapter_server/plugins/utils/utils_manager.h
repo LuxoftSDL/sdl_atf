@@ -143,6 +143,11 @@ public:
   static std::pair<std::string, int>
   ExecuteCommand(const std::string &bash_command);
 
+  static
+  std::pair<std::string, int>
+  ExecuteCommandBg(const std::string &bash_command);
+
+
 private:
   static std::vector<int> GetAppPids(const std::string &app_name);
   static std::string GetAppStatus(int pid, int *num_threads = 0);

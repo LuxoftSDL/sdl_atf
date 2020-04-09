@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "../../common/constants.h"
 #include "../../common/custom_types.h"
@@ -394,11 +395,11 @@ void UtilsManager::Bind(rpc::server &server) {
           LOG_ERROR("{0}: {1}", __func__, error_msg::kBadTypeValue);
           return response_type(error_msg::kBadTypeValue, error_codes::FAILED);
         }
-        auto receive_result = UtilsManager::ExecuteCommand(bash_command);
-
-        return receive_result;
+        return ('&' == bash_command.back()) ? UtilsManager::ExecuteCommandBg(bash_command): 
+                                              UtilsManager::ExecuteCommand(bash_command);
       });
 }
+
 std::string UtilsManager::PluginName() { return "RemoteUtilsManager"; }
 int UtilsManager::StartApp(const std::string &app_path,
                            const std::string &app_name) {
@@ -683,6 +684,13 @@ UtilsManager::ExecuteCommand(const std::string &bash_command) {
   term_status = (0 == term_status) ? error_codes::SUCCESS : error_codes::FAILED;
 
   return std::make_pair(command_output, term_status);
+}
+
+std::pair<std::string, int>
+UtilsManager::ExecuteCommandBg(const std::string &bash_command) {
+  LOG_INFO("{0}: {1}", __func__, bash_command);
+  system(bash_command.c_str());
+  return std::make_pair("Background process", error_codes::SUCCESS);
 }
 
 std::vector<int> UtilsManager::GetAppPids(const std::string &app_name) {
