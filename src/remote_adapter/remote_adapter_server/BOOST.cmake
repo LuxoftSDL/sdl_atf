@@ -24,7 +24,7 @@ if(QNXNTO)
     set(CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}" "${BOOST_ROOT}")
 endif()
 
-find_package(Boost 1.68.0 COMPONENTS system filesystem)
+find_package(Boost 1.68.0 COMPONENTS filesystem system)
 
 if (NOT ${Boost_FOUND})
     message(STATUS "Did not find boost. Downloading and installing boost 1.68")
@@ -70,8 +70,8 @@ if (NOT ${Boost_FOUND})
 endif()
 
 set(BOOST_LIBRARIES
-    "${BOOST_LIBRARY_DIRS}/libboost_system.a"
-    "${BOOST_LIBRARY_DIRS}/libboost_filesystem.a")
+    "${BOOST_LIBRARY_DIRS}/libboost_filesystem.a"
+    "${BOOST_LIBRARY_DIRS}/libboost_system.a")
 
 include_directories("${BOOST_INCLUDE_DIRS}")
 
