@@ -20,11 +20,12 @@ export LANG=en_US.UTF-8
 echo "Remote adapter server available by following ip adresses : "
 ip addr  | grep -E "inet " | tr -s " " | cut -d ' ' -f 3| cut -d '/' -f 1
 
+echo " ls /home/developer "
 ls /home/developer
 
-echo "SDL bin dir : /home/developer/sdlbin"; ls /home/developer/sdlbin
-echo "ATF bin dir : /home/developer/atfbin"; ls /home/developer/atfbin
-echo "Third party  /home/developer/thirdparty"; ls /home/developer/thirdparty
+echo "SDL bin dir : /home/developer/sdlbin"; ls -la /home/developer/sdlbin
+echo "ATF bin dir : /home/developer/atfbin"; ls -la /home/developer/atfbin
+echo "Third party  /home/developer/thirdparty"; ls -la /home/developer/thirdparty
 
 cd /home/developer/atfbin/RemoteTestingAdapterServer
 

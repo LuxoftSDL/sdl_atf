@@ -15,8 +15,8 @@ docker run -e LOCAL_USER_ID=$UID \
        --net=host\
        --name=$CONTAINER_NAME\
        -v /var/run/docker.sock:/var/run/docker.sock\
-       -v $PATH_TO_ATFBIN:/home/developer/atfbin\
        -v $PATH_TO_SDLBIN:/home/developer/sdlbin\
+       -v $PATH_TO_ATFBIN:/home/developer/atfbin\
        -v $PATH_TO_THIRDPARTY:/home/developer/thirdparty\
        -m=$MEMORY_CONSTRAINS\
        -it $IMAGE_NAME
