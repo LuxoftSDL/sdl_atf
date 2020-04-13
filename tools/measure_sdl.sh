@@ -58,6 +58,4 @@ done
 PARAMS="--pidstat_file=$OUTPUT_PIDSTAT_FILE --ps_file=$OUTPUT_PS_FILE --output_dir=$OUTPUT_DIR --title=$1"
 if [ $REMOTE = true ]; then PARAMS="$PARAMS --docker_file=$OUTPUT_DOCKER_FILE"; fi
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $DIR
-python3 ./sdl_graphs.py $PARAMS
+python3 $DIR/sdl_graphs.py $PARAMS
