@@ -2,6 +2,21 @@ PATH_TO_SDLBIN=$1
 PATH_TO_ATFBIN=$2
 PATH_TO_THIRDPARTY=$3
 
+if [ -z "$PATH_TO_SDLBIN" ]; then
+       echo "Path to SDL binaries is not defined as 1st argument"
+       exit 1;
+fi
+
+if [ -z "$PATH_TO_ATFBIN" ]; then
+       echo "Path to ATF binaries is not defined as 2nd argument"
+       exit 1;
+fi
+
+if [ -z "$PATH_TO_THIRDPARTY" ]; then
+       echo "Path to 3rd party libraries is not defined as 3rd argument"
+       exit 1;
+fi
+
 CONTAINER_NAME=remote_sdl
 IMAGE_NAME=remote_atf_server
 MEMORY_CONSTRAINS=4G

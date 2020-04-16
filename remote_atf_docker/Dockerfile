@@ -16,7 +16,7 @@ RUN apt-get update && apt-get -q -y install sqlite3 libqt5websockets5 net-tools 
   qttranslations5-l10n- xdg-user-dirs- xml-core- dbus-
 
 RUN apt-get update && apt install -y netcat cpipe gnuplot sysstat python3-pip docker.io
-RUN apt-get update && apt install -y python3-numpy python3-scipy python3-matplotlib 
+RUN apt-get update && apt install -y python3-numpy python3-scipy python3-matplotlib
 
 RUN locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8
 
