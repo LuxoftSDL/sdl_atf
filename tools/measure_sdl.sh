@@ -8,6 +8,7 @@ OUTPUT_DIR="measure"/$1
 OUTPUT_PIDSTAT_FILE=$OUTPUT_DIR/pidstat.log
 OUTPUT_PS_FILE=$OUTPUT_DIR/ps.log
 OUTPUT_DOCKER_FILE=$OUTPUT_DIR/docker.log
+CONTAINTER_NAME=$(docker inspect --format='{{.Name}}' $HOSTNAME | cut -c2-)
 
 STEP=1
 
@@ -34,7 +35,7 @@ function measure_pid_stat() {
 }
 
 function measure_docker() {
-    RECORD=$(docker stats --format "{{.Name}} {{.CPUPerc}} {{.MemUsage}}  {{.PIDs}}"  --no-stream | grep remote_sdl)
+    RECORD=$(docker stats --format "{{.Name}} {{.CPUPerc}} {{.MemUsage}}  {{.PIDs}}"  --no-stream | grep $CONTAINTER_NAME)
     echo $RECORD
     TIME=$(date +'%T:%N')
     echo $TIME $RECORD >> $OUTPUT_DOCKER_FILE
