@@ -169,7 +169,7 @@ def main():
         records = read_records(args.pidstat_file, parse_pidstat, sdl_start_time_pidstat)
         process_records(records, "pidstat", 
             args.title + "\npidstat -urdlv -h", 
-            os.path.join(args.output_dir , "pidstat"))
+            os.path.join(args.output_dir , re.sub("\D", "", args.output_dir)))
 
     if args.ps_file:
         print("ps log file : {}".format(args.ps_file))
