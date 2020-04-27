@@ -29,10 +29,10 @@ def parse_ps(line):
     record = {}
     record["time"] = datetime.strptime(line[0][:-3], "%H:%M:%S:%f")
     record["start"] = datetime.strptime(line[1], "%H:%M:%S")
-    record["%cpu"] = float(line[2])
+    record["pcpu"] = float(line[2])
     record["cp"] = float(line[3])
     record["cputime"] = datetime.strptime(line[4], "%H:%M:%S")
-    record["%mem"] = float(line[5])
+    record["pmem"] = float(line[5])
     record["sz"] = float(line[6])
     record["thcount"] = int(line[7])
     return record
@@ -61,9 +61,9 @@ def parse_docker(line):
 
 def graphs(record_type):
     if record_type == "ps":
-        return ["%cpu", "%mem", "sz", "thcount"]
+        return ["pcpu", "pmem", "sz", "thcount"]
     if record_type == "pidstat":
-        return ["%CPU", "VSZ", "RSS", "%MEM", "threads"]
+        return ["pCPU", "VSZ", "RSS", "pMEM", "threads"]
     if record_type == "docker":
         return ["CPUPerc", "MemUsage", "PIDs"]
     raise "Unknown record_type {}".format(record_type)
@@ -80,17 +80,17 @@ def parse_pidstat(line):
     record["time"] = datetime.strptime(next_col(), "%H:%M:%S")
     uid = next_col()
     pid = next_col()
-    record["%usr"] = float(next_col())
-    record["%system"] = float(next_col())
-    record["%guest"] = float(next_col())
-    record["%wait"] = float(next_col())
-    record["%CPU"] = float(next_col())
+    record["pusr"] = float(next_col())
+    record["psystem"] = float(next_col())
+    record["pguest"] = float(next_col())
+    record["pwait"] = float(next_col())
+    record["pCPU"] = float(next_col())
     record["CPU"] = int(next_col())
     record["minflt/s"] = float(next_col())
     record["majflt/s"] = float(next_col())
     record["VSZ"] = int(next_col())
     record["RSS"] = int(next_col())
-    record["%MEM"] = float(next_col())
+    record["pMEM"] = float(next_col())
     record["kB_rd/s"] = float(next_col())
     record["kB_wr/s"] = float(next_col())
     record["kB_ccwr/s"] = float(next_col())
@@ -169,20 +169,20 @@ def main():
         records = read_records(args.pidstat_file, parse_pidstat, sdl_start_time_pidstat)
         process_records(records, "pidstat", 
             args.title + "\npidstat -urdlv -h", 
-            os.path.join(args.output_dir , "pidstat"))
+            os.path.join(args.output_dir , re.sub("\D", "", args.output_dir)))
 
     if args.ps_file:
         print("ps log file : {}".format(args.ps_file))
         records = read_records(args.ps_file, parse_ps, sdl_start_time_ps)
         process_records(records, "ps",
             args.title + '\nps --no-headers --format "start %cpu cp cputime %mem sz thcount"',
-            os.path.join(args.output_dir , "ps"))
+            os.path.join(args.output_dir , re.sub("\D", "", args.output_dir)))
     if args.docker_file:
         print("docker log file : {}".format(args.docker_file))
         records = read_records(args.docker_file, parse_docker, sdl_start_time_docker)
         process_records(records, "docker",
             args.title + '\n{{.Name}} {{.CPUPerc}} {{.MemUsage}}  {{.PIDs}}',
-            os.path.join(args.output_dir , "docker"))
+            os.path.join(args.output_dir , re.sub("\D", "", args.output_dir)))
 
     
     print("Done")
