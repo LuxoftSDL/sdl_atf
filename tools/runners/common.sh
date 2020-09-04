@@ -185,7 +185,9 @@ copy_logs() {
   if [ -f ${REPORT_PATH_TS_SCRIPT}/${REPORT_FILE_CONSOLE} ]; then
     remove_color ${REPORT_PATH_TS_SCRIPT}/${REPORT_FILE_CONSOLE}
   fi
-  copy_sdl_logs
+  if [ ${LIST_FAILED[ID]} ] || [ ${LIST_ABORTED[ID]} ]; then
+    copy_sdl_logs
+  fi
 }
 
 kill_sdl() {
