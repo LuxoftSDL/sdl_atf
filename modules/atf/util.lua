@@ -368,8 +368,8 @@ function Util.runner.script_execute(script_name)
   check_required_fields()
   copy_interfaces()
   Util.runner.script_file_name = script_name
-  xmlReporter = xmlReporter.init(tostring(script_name))
-  atf_logger = atf_logger.init_log(tostring(script_name))
+  xmlReporter = xmlReporter.init()
+  atf_logger = atf_logger.init()
   dofile(script_name)
 end
 

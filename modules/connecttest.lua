@@ -801,30 +801,4 @@ function StopSDL()
   return SDL:StopSDL()
 end
 
---- Create test step for enable full ATF logs
-function enableFullATFLogs()
-  function enableFullLoggintTestCase()
-    if (config.storeFullATFLogs) then
-      Test:FailTestCase("full ATF logs already enabled")
-    else
-      config.storeFullATFLogs = true
-    end
-  end
-  Test["EnableFullATFLogs"] = nil
-  Test["EnableFullATFLogs"] = enableFullLoggintTestCase
-end
-
---- Create test step for disable full ATF logs
-function disableFullATFLogs()
-  function disableFullLoggintTestCase()
-    if (not config.storeFullATFLogs) then
-      Test:FailTestCase("full ATF logs already disabled")
-    else
-      config.storeFullATFLogs = false
-    end
-  end
-  Test["DisableFullATFLogs"] = nil
-  Test["DisableFullATFLogs"] = disableFullLoggintTestCase
-end
-
 return Test

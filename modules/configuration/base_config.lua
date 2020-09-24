@@ -53,9 +53,7 @@ config.ShowTimeInConsole = true
 --- Flag which defines whether ATF performs validation of Mobile and HMI messages by API
 config.ValidateSchema = true
 --- Flag which defines whether ATF ignores collecting of reports
-config.excludeReport = true
---- Flag which defines whether ATF creates full ATF logs (with json files and service messages)
-config.storeFullATFLogs = true
+config.excludeReport = false
 --- Flag which defines whether ATF stores full SDLCore logs
 config.storeFullSDLLogs = false
 --- Define path to collected ATF and SDL logs
