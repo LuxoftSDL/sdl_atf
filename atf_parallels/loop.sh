@@ -10,7 +10,7 @@ _test_id_file=$1; shift
 
 _lockfile=.lock
 
-_image_name=atf_worker
+_image_name=atf_worker:ubuntu_20.04
 _container_name=$(basename $_tmpdirname)
 
 ####################################################################
