@@ -239,7 +239,7 @@ check_arguments() {
     echo "Invalid configuration was specified within --config option"
     exit 1
   fi
-  if ( [ $FORCE_PARALLELS = true ] || [ $JOBS -gt 1 ] ) && [ -z "$(docker images | grep 'atf_worker')" ]; then
+  if ( [ $FORCE_PARALLELS = true ] || [ $JOBS -gt 1 ] ) && [ -z "$(docker images | grep 'atf_worker' | grep 'libssl')" ]; then
     echo "Required docker image 'atf_worker' is not available"
     exit 1
   fi

@@ -32,4 +32,4 @@ case $_ubuntu_ver in
     exit 1;;
 esac
 
-docker build --build-arg ubuntu_ver=$_ubuntu_ver -f Dockerfile -t atf_worker .
+docker build --build-arg ubuntu_ver=$_ubuntu_ver -f Dockerfile -t atf_worker:libssl .
