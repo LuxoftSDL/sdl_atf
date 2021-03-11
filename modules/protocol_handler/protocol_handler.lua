@@ -268,6 +268,13 @@ function mt.__index:Parse(binary, validateJson, frameHandler)
 
     local decryptedData
     msg._technical.decryptionStatus, decryptedData = decryptPayload(msg.binaryData, msg)
+    local size
+    local numOfFrames
+    if msg.frameType == 2 then
+      size = bytesToInt32(decryptedData, 1)
+      numOfFrames = bytesToInt32(decryptedData, 5)
+    end
+    print("Decode:", msg.frameType, msg.encryption, #msg.binaryData, #tostring(decryptedData), size, numOfFrames)
     if msg._technical.decryptionStatus == securityConstants.SECURITY_STATUS.SUCCESS then
       msg.binaryData = decryptedData
     end
@@ -312,6 +319,7 @@ end
 -- @tparam table message Version of SDL protocol
 -- @treturn string Binary frame
 function mt.__index:GetBinaryFrame(message)
+  local nonEncData = (message.binaryData and message.binaryData or "")
   local max_protocol_payload_size = getProtocolFrameSize(message.version)
      - constants.PROTOCOL_HEADER_SIZE
 
@@ -323,8 +331,15 @@ function mt.__index:GetBinaryFrame(message)
   else
     message.binaryData = ""
   end
-
-  return createProtocolHeader(message) .. message.binaryData
+  local msg = createProtocolHeader(message) .. message.binaryData
+  local size
+  local numOfFrames
+  if message.frameType == 2 then
+    size = (nonEncData and bytesToInt32(nonEncData, 1) or nil)
+    numOfFrames = (nonEncData and bytesToInt32(nonEncData, 5) or nil)
+  end
+  print("Encode:", message.frameType, message.encryption, #nonEncData, #message.binaryData, size, numOfFrames)
+  return msg
 end
 
 --- Compose table with binary message and header for SDL
