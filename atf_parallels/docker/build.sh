@@ -45,4 +45,4 @@ case $_ubuntu_ver in
     exit 1;;
 esac
 
-docker build --build-arg ubuntu_ver=$_ubuntu_ver --build-arg openssl_lib_ver=$_openssl_lib_ver --build-arg expat_lib_ver=$_expat_lib_ver -f Dockerfile -t atf_worker .
+docker build --build-arg ubuntu_ver=$_ubuntu_ver --build-arg openssl_lib_ver=$_openssl_lib_ver --build-arg expat_lib_ver=$_expat_lib_ver -f Dockerfile -t atf_worker:libssl .
