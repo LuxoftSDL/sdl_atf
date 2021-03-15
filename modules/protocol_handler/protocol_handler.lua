@@ -274,7 +274,7 @@ function mt.__index:Parse(binary, validateJson, frameHandler)
       size = bytesToInt32(decryptedData, 1)
       numOfFrames = bytesToInt32(decryptedData, 5)
     end
-    print("Decode:", msg.frameType, msg.encryption, #msg.binaryData, #tostring(decryptedData), size, numOfFrames)
+    --print("Decode:", msg.frameType, msg.encryption, #msg.binaryData, #tostring(decryptedData), size, numOfFrames)
     if msg._technical.decryptionStatus == securityConstants.SECURITY_STATUS.SUCCESS then
       msg.binaryData = decryptedData
     end
@@ -338,7 +338,7 @@ function mt.__index:GetBinaryFrame(message)
     size = (nonEncData and bytesToInt32(nonEncData, 1) or nil)
     numOfFrames = (nonEncData and bytesToInt32(nonEncData, 5) or nil)
   end
-  print("Encode:", message.frameType, message.encryption, #nonEncData, #message.binaryData, size, numOfFrames)
+  --print("Encode:", message.frameType, message.encryption, #nonEncData, #message.binaryData, size, numOfFrames)
   return msg
 end
 
