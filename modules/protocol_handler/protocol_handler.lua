@@ -344,6 +344,7 @@ function mt.__index:Compose(message)
 
   if message.binaryData and binaryDataSize > kMax_protocol_payload_size then
     local countOfDataFrames = 0
+    local encryptedBinaryDataSize = 0
     -- Create messages consecutive frames
     while #message.binaryData > 0 do
       countOfDataFrames = countOfDataFrames + 1
@@ -366,7 +367,9 @@ function mt.__index:Compose(message)
         messageId = message.messageId,
         binaryData = dataPart
       }
-      table.insert(res, self:GetBinaryFrame(consecutiveFrameMessage))
+      local frame = self:GetBinaryFrame(consecutiveFrameMessage)
+      encryptedBinaryDataSize = encryptedBinaryDataSize + (#frame - constants.PROTOCOL_HEADER_SIZE)
+      table.insert(res, frame)
     end
 
     -- Create message firstframe
@@ -378,7 +381,7 @@ function mt.__index:Compose(message)
       frameInfo = 0,
       sessionId = message.sessionId,
       messageId = message.messageId,
-      binaryData = int32ToBytes(binaryDataSize) .. int32ToBytes(countOfDataFrames)
+      binaryData = int32ToBytes(encryptedBinaryDataSize) .. int32ToBytes(countOfDataFrames)
     }
     table.insert(res, 1, self:GetBinaryFrame(firstFrameMessage))
   else
